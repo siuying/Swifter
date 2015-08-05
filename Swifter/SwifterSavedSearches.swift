@@ -24,6 +24,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 public extension Swifter {
 
@@ -32,7 +33,7 @@ public extension Swifter {
 
     Returns the authenticated user's saved search queries.
     */
-    public func getSavedSearchesListWithSuccess(success: ((savedSearches: [JSONValue]?) -> Void)? = nil, failure: FailureHandler? = nil) {
+    public func getSavedSearchesListWithSuccess(success: ((savedSearches: [JSON]?) -> Void)? = nil, failure: FailureHandler? = nil) {
         let path = "saved_searches/list.json"
 
         self.getJSONWithPath(path, baseURL: self.apiURL, parameters: [:], uploadProgress: nil, downloadProgress: nil, success: {
@@ -49,13 +50,13 @@ public extension Swifter {
 
     Retrieve the information for the saved search represented by the given id. The authenticating user must be the owner of saved search ID being requested.
     */
-    public func getSavedSearchesShowWithID(id: Int, success: ((savedSearch: Dictionary<String, JSONValue>?) -> Void)? = nil, failure: FailureHandler? = nil) {
+    public func getSavedSearchesShowWithID(id: Int, success: ((savedSearch: Dictionary<String, JSON>?) -> Void)? = nil, failure: FailureHandler? = nil) {
         let path = "saved_searches/show/\(id).json"
 
         self.getJSONWithPath(path, baseURL: self.apiURL, parameters: [:], uploadProgress: nil, downloadProgress: nil, success: {
             json, response in
 
-            success?(savedSearch: json.object)
+            success?(savedSearch: json.dictionary)
             return
 
             }, failure: failure)
@@ -66,7 +67,7 @@ public extension Swifter {
 
     Create a new saved search for the authenticated user. A user may only have 25 saved searches.
     */
-    public func postSavedSearchesCreateShowWithQuery(query: String, success: ((savedSearch: Dictionary<String, JSONValue>?) -> Void)? = nil, failure: FailureHandler? = nil) {
+    public func postSavedSearchesCreateShowWithQuery(query: String, success: ((savedSearch: Dictionary<String, JSON>?) -> Void)? = nil, failure: FailureHandler? = nil) {
         let path = "saved_searches/create.json"
 
         var parameters = Dictionary<String, Any>()
@@ -75,7 +76,7 @@ public extension Swifter {
         self.postJSONWithPath(path, baseURL: self.apiURL, parameters: parameters, uploadProgress: nil, downloadProgress: nil, success: {
             json, response in
 
-            success?(savedSearch: json.object)
+            success?(savedSearch: json.dictionary)
             return
 
             }, failure: failure)
@@ -86,13 +87,13 @@ public extension Swifter {
 
     Destroys a saved search for the authenticating user. The authenticating user must be the owner of saved search id being destroyed.
     */
-    public func postSavedSearchesDestroyWithID(id: Int, success: ((savedSearch: Dictionary<String, JSONValue>?) -> Void)? = nil, failure: FailureHandler? = nil) {
+    public func postSavedSearchesDestroyWithID(id: Int, success: ((savedSearch: Dictionary<String, JSON>?) -> Void)? = nil, failure: FailureHandler? = nil) {
         let path = "saved_searches/destroy/\(id).json"
 
         self.postJSONWithPath(path, baseURL: self.apiURL, parameters: [:], uploadProgress: nil, downloadProgress: nil, success: {
             json, response in
 
-            success?(savedSearch: json.object)
+            success?(savedSearch: json.dictionary)
             return
             
             }, failure: failure)

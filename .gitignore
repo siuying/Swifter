@@ -38,3 +38,5 @@ DerivedData
 *.ipa
 *.xcuserstate
 
+
+Carthage

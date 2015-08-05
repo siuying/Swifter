@@ -25,6 +25,7 @@
 
 import Foundation
 import Accounts
+import SwiftyJSON
 
 public class Swifter {
 
@@ -150,23 +151,11 @@ public class Swifter {
             data, response in
 
             dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0)) {
-                var error: NSError?
-                do {
-                    let jsonResult = try JSON.parseJSONData(data)
-                    dispatch_async(dispatch_get_main_queue()) {
-                        if let success = success {
-                            success(json: jsonResult, response: response)
-                        }
+                let jsonResult = JSON(data: data)
+                dispatch_async(dispatch_get_main_queue()) {
+                    if let success = success {
+                        success(json: jsonResult, response: response)
                     }
-                } catch let error1 as NSError {
-                    error = error1
-                    dispatch_async(dispatch_get_main_queue()) {
-                        if let failure = failure {
-                            failure(error: error!)
-                        }
-                    }
-                } catch {
-                    fatalError()
                 }
             }
         }

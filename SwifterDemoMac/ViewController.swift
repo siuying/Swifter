@@ -60,7 +60,7 @@ class ViewController: NSViewController {
                             let swifter = Swifter(account: twitterAccount)
 
                             swifter.getStatusesHomeTimelineWithCount(20, success: {
-                                (statuses: [JSONValue]?) in
+                                (statuses: [JSON]?) in
 
                                 println(statuses)
 
@@ -83,7 +83,7 @@ class ViewController: NSViewController {
                 println("Successfully authorized")
 
                 swifter.getStatusesHomeTimelineWithCount(20, success: {
-                    (statuses: [JSONValue]?) in
+                    (statuses: [JSON]?) in
 
                     println(statuses)
 

@@ -24,6 +24,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 #if os(iOS)
     import UIKit
@@ -96,8 +97,8 @@ public extension Swifter {
                     failure?(error: error)
                 }
             }
-            else if let errors = json["errors"].object {
-                let error = NSError(domain: SwifterError.domain, code: errors["code"]!.integer!, userInfo: [NSLocalizedDescriptionKey: errors["message"]!.string!]);
+            else if let errors = json["errors"].dictionary {
+                let error = NSError(domain: SwifterError.domain, code: errors["code"]!.intValue, userInfo: [NSLocalizedDescriptionKey: errors["message"]!.stringValue]);
                 failure?(error: error)
             }
             else {

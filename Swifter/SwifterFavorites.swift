@@ -24,6 +24,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 public extension Swifter {
 
@@ -34,7 +35,7 @@ public extension Swifter {
 
     If you do not provide either a user_id or screen_name to this method, it will assume you are requesting on behalf of the authenticating user. Specify one or the other for best results.
     */
-    public func getFavoritesListWithCount(count: Int? = nil, sinceID: String? = nil, maxID: String? = nil, success: ((statuses: [JSONValue]?) -> Void)? = nil, failure: FailureHandler? = nil) {
+    public func getFavoritesListWithCount(count: Int? = nil, sinceID: String? = nil, maxID: String? = nil, success: ((statuses: [JSON]?) -> Void)? = nil, failure: FailureHandler? = nil) {
         let path = "favorites/list.json"
 
         var parameters = Dictionary<String, Any>()
@@ -57,7 +58,7 @@ public extension Swifter {
             }, failure: failure)
     }
 
-    public func getFavoritesListWithUserID(userID: String, count: Int? = nil, sinceID: String? = nil, maxID: String? = nil, success: ((statuses: [JSONValue]?) -> Void)? = nil, failure: FailureHandler? = nil) {
+    public func getFavoritesListWithUserID(userID: String, count: Int? = nil, sinceID: String? = nil, maxID: String? = nil, success: ((statuses: [JSON]?) -> Void)? = nil, failure: FailureHandler? = nil) {
         let path = "favorites/list.json"
 
         var parameters = Dictionary<String, Any>()
@@ -82,7 +83,7 @@ public extension Swifter {
             }, failure: failure)
     }
 
-    public func getFavoritesListWithScreenName(screenName: String, count: Int? = nil, sinceID: String? = nil, maxID: String? = nil, success: ((statuses: [JSONValue]?) -> Void)? = nil, failure: FailureHandler? = nil) {
+    public func getFavoritesListWithScreenName(screenName: String, count: Int? = nil, sinceID: String? = nil, maxID: String? = nil, success: ((statuses: [JSON]?) -> Void)? = nil, failure: FailureHandler? = nil) {
         let path = "favorites/list.json"
 
         var parameters = Dictionary<String, Any>()
@@ -114,7 +115,7 @@ public extension Swifter {
 
     This process invoked by this method is asynchronous. The immediately returned status may not indicate the resultant favorited status of the tweet. A 200 OK response from this method will indicate whether the intended action was successful or not.
     */
-    public func postDestroyFavoriteWithID(id: String, includeEntities: Bool? = nil, success: ((status: Dictionary<String, JSONValue>?) -> Void)? = nil, failure: FailureHandler? = nil) {
+    public func postDestroyFavoriteWithID(id: String, includeEntities: Bool? = nil, success: ((status: [String : SwiftyJSON.JSON]?) -> Void)? = nil, failure: FailureHandler? = nil) {
         let path = "favorites/destroy.json"
 
         var parameters = Dictionary<String, Any>()
@@ -127,7 +128,7 @@ public extension Swifter {
         self.postJSONWithPath(path, baseURL: self.apiURL, parameters: parameters, uploadProgress: nil, downloadProgress: nil, success: {
             json, response in
 
-            success?(status: json.object)
+            success?(status: json.dictionary)
             return
 
             }, failure: failure)
@@ -140,7 +141,7 @@ public extension Swifter {
 
     This process invoked by this method is asynchronous. The immediately returned status may not indicate the resultant favorited status of the tweet. A 200 OK response from this method will indicate whether the intended action was successful or not.
     */
-    public func postCreateFavoriteWithID(id: String, includeEntities: Bool? = nil, success: ((status: Dictionary<String, JSONValue>?) -> Void)? = nil, failure: SwifterHTTPRequest.FailureHandler? = nil) {
+    public func postCreateFavoriteWithID(id: String, includeEntities: Bool? = nil, success: ((status: [String : SwiftyJSON.JSON]?) -> Void)? = nil, failure: SwifterHTTPRequest.FailureHandler? = nil) {
         let path = "favorites/create.json"
 
         var parameters = Dictionary<String, Any>()
@@ -153,7 +154,7 @@ public extension Swifter {
         self.postJSONWithPath(path, baseURL: self.apiURL, parameters: parameters, uploadProgress: nil, downloadProgress: nil, success: {
             json, response in
             
-            success?(status: json.object)
+            success?(status: json.dictionary)
             return
             
             }, failure: failure)

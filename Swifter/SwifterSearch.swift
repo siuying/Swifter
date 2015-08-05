@@ -24,11 +24,12 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 public extension Swifter {
 
     //	GET		search/tweets
-    public func getSearchTweetsWithQuery(q: String, geocode: String? = nil, lang: String? = nil, locale: String? = nil, resultType: String? = nil, count: Int? = nil, until: String? = nil, sinceID: String? = nil, maxID: String? = nil, includeEntities: Bool? = nil, callback: String? = nil, success: ((statuses: [JSONValue]?, searchMetadata: Dictionary<String, JSONValue>?) -> Void)? = nil, failure: FailureHandler) {
+    public func getSearchTweetsWithQuery(q: String, geocode: String? = nil, lang: String? = nil, locale: String? = nil, resultType: String? = nil, count: Int? = nil, until: String? = nil, sinceID: String? = nil, maxID: String? = nil, includeEntities: Bool? = nil, callback: String? = nil, success: ((statuses: [JSON]?, searchMetadata: Dictionary<String, JSON>?) -> Void)? = nil, failure: FailureHandler) {
         let path = "search/tweets.json"
 
         var parameters = Dictionary<String, Any>()
@@ -68,7 +69,7 @@ public extension Swifter {
         self.getJSONWithPath(path, baseURL: self.apiURL, parameters: parameters, uploadProgress: nil, downloadProgress: nil, success: {
             json, response in
 
-            switch (json["statuses"].array, json["search_metadata"].object) {
+            switch (json["statuses"].array, json["search_metadata"].dictionary) {
             case (let statuses, let searchMetadata):
                 success?(statuses: statuses, searchMetadata: searchMetadata)
             }
