@@ -72,12 +72,12 @@ public extension Swifter {
         }, failure: failure)
     }
 
-    public func createAuthorizeURL(callbackURL: NSURL, success: (SwifterCredential.OAuthAccessToken?, NSURL) -> Void, failure: FailureHandler?) {
+    public func createAuthorizeURL(callbackURL: NSURL, success: (SwifterCredential.OAuthAccessToken, NSURL) -> Void, failure: FailureHandler?) {
         self.postOAuthRequestTokenWithCallbackURL(callbackURL, success: {
             token, response in
             let authorizeURL = NSURL(string: "/oauth/authorize", relativeToURL: self.apiURL)
             let queryURL = NSURL(string: authorizeURL!.absoluteString + "?oauth_token=\(token!.key)")
-            success(token, queryURL!)
+            success(token!, queryURL!)
         }, failure: failure)
     }
 
