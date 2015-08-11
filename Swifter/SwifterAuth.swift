@@ -69,7 +69,16 @@ public extension Swifter {
             #else
                 NSWorkspace.sharedWorkspace().openURL(queryURL!)
             #endif
-            }, failure: failure)
+        }, failure: failure)
+    }
+
+    public func createAuthorizeURL(callbackURL: NSURL, success: (NSURL) -> Void, failure: FailureHandler?) {
+        self.postOAuthRequestTokenWithCallbackURL(callbackURL, success: {
+            token, response in
+            let authorizeURL = NSURL(string: "/oauth/authorize", relativeToURL: self.apiURL)
+            let queryURL = NSURL(string: authorizeURL!.absoluteString + "?oauth_token=\(token!.key)")
+            success(queryURL!)
+        }, failure: failure)
     }
 
     public class func handleOpenURL(url: NSURL) {
